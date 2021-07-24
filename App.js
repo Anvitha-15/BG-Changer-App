@@ -1,21 +1,60 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// import { StatusBar } from 'expo-status-bar';
+import React,{useState} from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+const App = () => {
+
+  const [randomColours, setRandomColours] = useState("rgb(20, 30, 97)");
+
+  const changeBG = () =>{
+    let color = "rgb("+
+      Math.floor(Math.random() * 256)+
+      "," +
+      Math.floor(Math.random() * 256)+
+      "," +
+      Math.floor(Math.random() * 256)+
+      ")";
+
+      setRandomColours(color);
+  };
+
+  const toReset = ()=>{
+    let color = "rgb(20, 30, 97)"
+    setRandomColours(color);
+  };
+
+  return(
+    <>
+    <StatusBar backgroundColor={randomColours}/>
+    <View style={[styles.container,{backgroundColor:randomColours}]}>
+    <TouchableOpacity onPress={changeBG}>
+      <Text style={styles.text}>Tap me to BG</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={toReset}>
+      <Text style = {[styles.text, {marginTop:40}]}>Reset</Text>
+    </TouchableOpacity>
     </View>
-  );
+    
+    </>
+  )
 }
 
+export default App;
+
 const styles = StyleSheet.create({
-  container: {
+  container:{
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent:'center',
+    
   },
-});
+  text:{
+    fontSize: 20,
+    color: 'rgb(20, 30, 97)',
+    backgroundColor: '#EEEEEE',
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    textTransform : 'uppercase',
+    borderRadius: 15,
+  }
+})
